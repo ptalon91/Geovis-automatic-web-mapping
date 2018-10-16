@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>Projet de Géovisualisation dynamique et traitement de données</title>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<!-- Leaflet -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+		<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+		<script src="https://raw.github.com/calvinmetcalf/leaflet-ajax/master/dist/leaflet.ajax.min.js"></script>
+		
+		<!-- ClassyBrew -->
+		<script src="/static/lib/classybrew.min.js"</script>
+		
+		<!-- Geostats -->
+		<script type="text/javascript" src="/static/lib/geostats.min.js"></script>
+		
+		<!-- D3 -->
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		
+		<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		
+		<!-- Easydropdown - menu for data selection -->	
+		<script src="static/lib/jquery.easydropdown.min.js" type="text/javascript"></script>
+		
+		<!-- Highcharts -->
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/highcharts-more.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		
+		<!-- L.easyButton -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+		<script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+		
+		<!-- Styles -->
+		<link rel="stylesheet" href="/static/style.css" />
+		<link rel="stylesheet" type="text/css" href="static/easydropdown.metro.css"/>
+		
+		<!-- Font -->
+		<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+	</head>
+  
+	<body>
+		<div class="container-fluid head-row">
+			<div id="titre" class="row text-center">
+				<h3><strong>Lausanne - Les catégories d'utilisation du sol</strong></h3>
+				<hr width="25%">
+			</div>
+		</div>
+		
+		<div class="container-fluid">
+			<div class="col-sm-2">
+				<div class="sidebar-nav">
+					  <div class="navbar navbar-default" role="navigation">
+						<div class="navbar-header">
+						  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+						  <span class="sr-only">Toggle navigation</span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  </button>
+						  <span class="visible-xs navbar-brand"></span>
+						</div>
+						<div class="navbar-collapse collapse sidebar-navbar-collapse">
+						  <ul class="nav navbar-nav" id="sidenav01">
+							<li class="toggle0">
+							  <a href="#" data-toggle="collapse" data-target="#toggleDemo0" data-parent="#sidenav01" class="collapsed">
+							  <h4 class="toggle0">
+							  <span id="button-menu" class="glyphicon glyphicon-list"></span> Menu
+							  <br>
+							  </h4>
+							  </a>
+							  <div class="collapse" id="toggleDemo0" style="height: 0px;">
+								<ul class="nav nav-list">
+								  <li>
+							  <a href="#" data-toggle="collapse" data-target="#toggleDemo" data-parent="#sidenav01" class="collapsed">
+							  <span class="glyphicon glyphicon-folder-open"></span> Données <span class="caret pull-right"></span>
+							  </a>
+							  <div class="collapse toggle1" id="toggleDemo" style="height: 0px;">
+								<ul class="nav nav-list">
+								  <li><a id="pcat1" onClick="SelectId(this.id)" href="#">Aires industrielles et artisanales</a></li>
+								  <li><a id="pcat2" onClick="SelectId(this.id)" href="#">Aires de bâtiments</a></li>
+								  <li><a id="pcat3" onClick="SelectId(this.id)" href="#">Surfaces de transport</a></li>
+								  <li><a id="pcat4" onClick="SelectId(this.id)" href="#">Surfaces d'infrastructure spéciale</a></li>
+								  <li><a id="pcat5" onClick="SelectId(this.id)" href="#">Espaces verts et lieux de détente</a></li>
+								  <li><a id="pcat6" onClick="SelectId(this.id)" href="#">Arboriculture fruitière, viticulture, horticulture</a></li>
+								  <!--<li><a id="pcat7" onClick="SelectId(this.id)" href="#">Terres arables</a></li>-->
+								  <li><a id="pcat8" onClick="SelectId(this.id)" href="#">Prairies naturelles, pâturages locaux</a></li>
+								  <!--<li><a id="pcat9" onClick="SelectId(this.id)" href="#">Alpages</a></li>-->
+								  <li><a id="pcat10" onClick="SelectId(this.id)" href="#">Forêt (sans forêt buissonnante)</a></li>
+								  <!--<li><a id="pcat11" onClick="SelectId(this.id)" href="#">Forêt buissonnante</a></li>-->
+								  <li><a id="pcat12" onClick="SelectId(this.id)" href="#">Autres surfaces boisées</a></li>
+								  <!--<li><a id="pcat13" onClick="SelectId(this.id)" href="#">Lacs</a></li>-->
+								  <!--<li><a id="pcat14" onClick="SelectId(this.id)" href="#">Cours d’eau</a></li>
+								  <li><a id="pcat15" onClick="SelectId(this.id)" href="#">Végétation improductive</a></li>
+								  <li><a id="pcat16" onClick="SelectId(this.id)" href="#">Surfaces sans végétation</a></li>
+								  <li><a id="pcat17" onClick="SelectId(this.id)" href="#">Glaciers, névés</a></li>-->
+								</ul>
+							  </div>
+							</li>
+							<li class="active">
+							  <a href="#" data-toggle="collapse" data-target="#toggleDemo3" data-parent="#sidenav01" class="collapsed">
+							  <span class="glyphicon glyphicon-stats"></span> Classification <span class="caret pull-right"></span>
+							  </a>
+							  <div class="collapse" id="toggleDemo3" style="height: 0px;">
+								<ul class="nav nav-list">
+								  <li><a id="jenks" onClick="SelectClassification(this.id)" href="#">Jenks</a></li>
+								  <li><a id="quantile" onClick="SelectClassification(this.id)" href="#">Quantiles</a></li>
+								  <li><a id="equal_interval" onClick="SelectClassification(this.id)" href="#">Intervalle régulier</a></li>
+								</ul>
+							  </div>
+							</li>
+								</ul>
+							  </div>
+							</li>
+							
+						  </ul>
+						</div>
+					  </div>
+				</div>
+			</div>
+			
+			<div class="main-content col-sm-10">
+				<div class="container-fluid data-row">
+					<div id="map" class="map-container col-sm-12"></div>
+					<div class="container-fluid middle">
+						<div class="col-sm-10 pull-left" id="data-descr">
+							<button type="button" class="btn btn-info glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#descr"> <b>Description</b></button>	
+							<p id="descr" class="collapse in">
+							<hr width="60%">
+						</div>
+					</div>
+					<div class="container-fluid middle">
+						<div class="col-sm-8 pull-right" id="data-graph">
+							<hr width="90%">
+							<h4 id="radarSectName">Caractéristiques du quartier</h4>
+							<script src="/static/lib/radarChart.js"></script>
+							<div id="containerRadar" style="min-width: 50px; max-width: 600px; margin: 0 auto"></div>
+							<p id="texteRadar"><b>Cliquez sur un secteur lausannois pour afficher le graphique "radar" correspondant.</b></p>
+							<p>Source: Données GEOSTAT, OFS 2015.</p>
+							<hr width="60%">
+						</div>
+					</div>
+					<div class="container-fluid middle">
+						<div class="col-sm-8 pull-left" id="data-stat">
+							<hr width="90%">
+							<h4>Scatter Plot</h4>
+							<div id="container" style="min-width: 50px; height: 400px; max-width: 1000px; margin: 0 auto"></div>
+							<hr width="60%">
+						</div>
+					</div>
+					<div class="container-fluid middle">
+						<div class="col-sm-12" id="data-stat">
+							<hr width="90%">
+								<p id="credits">Application web réalisée lors du semestre d'automne 2016, par <A HREF="mailto:p.talon@bluewin.ch">Patrick Talon</A> dans le cadre d'un projet pour le cours "Géovisualisation dynamique et traitement de données" du professeur Christian Kaiser, université de Lausanne.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/static/script.js"></script>	
+	</body>
+  
+</html>
